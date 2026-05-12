@@ -2,6 +2,7 @@ from datetime import datetime, timedelta
 
 from airflow import DAG
 from airflow.operators.python import PythonOperator
+from airflow.operators.trigger_dagrun import TriggerDagRunOperator
 from airflow.providers.amazon.aws.sensors.s3 import S3KeySensor
 from airflow.providers.snowflake.hooks.snowflake import SnowflakeHook
 
@@ -99,3 +100,13 @@ with DAG(
         )
 
         wait_for_file >> load_to_snowflake
+
+        #Trigger the separate dbt DAG after inventory loads
+        if dataset_name == "inventory":
+            trigger_snapshot = TriggerDagRunOperator(
+                task_id="trigger_inventory_snapshot_dag",
+                trigger_dag_id="dbt_inventory_snapshot",
+                wait_for_completion=False, # Set to True if you want the landing DAG to wait for dbt to finish
+            )
+            
+            load_to_snowflake >> trigger_snapshot
