@@ -1,0 +1,37 @@
+version: 2
+
+models:
+  - name: stg_inventory
+    description: "Staging model for inventory/product data."
+    columns:
+      - name: hash_product_id
+        description: "Hash-based surrogate key generated from product_id."
+        tests:
+          - not_null
+          - unique
+
+      - name: product_id
+        description: "Product identifier extracted from raw inventory JSON."
+        tests:
+          - not_null
+          - unique
+
+      - name: product_name
+        description: "Product name extracted from raw inventory JSON."
+        tests:
+          - not_null
+
+      - name: stock
+        description: "Current stock level converted to integer."
+        tests:
+          - not_null
+
+      - name: updated_at
+        description: "Timestamp when the product record was last updated."
+        tests:
+          - not_null
+
+      - name: loaded_at
+        description: "Timestamp when the record was loaded into the staging table."
+        tests:
+          - not_null

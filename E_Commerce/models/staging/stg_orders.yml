@@ -1,0 +1,58 @@
+version: 2
+
+models:
+  - name: stg_orders
+    description: "Parsed staging model for raw order JSON data."
+    columns:
+      - name: hash_order_id
+        description: "Hash-based surrogate key generated from order_id."
+        tests:
+          - not_null
+          - unique
+
+      - name: order_id
+        description: "Business order identifier from raw JSON."
+        tests:
+          - not_null
+          - unique
+
+      - name: customer_id
+        description: "Customer identifier associated with the order."
+        tests:
+          - not_null
+
+      - name: order_timestamp
+        description: "Order timestamp parsed from order_time."
+        tests:
+          - not_null
+
+      - name: order_date
+        description: "Order date derived from order_time."
+        tests:
+          - not_null
+
+      - name: order_amount
+        description: "Order amount converted from JSON into numeric type."
+        tests:
+          - not_null
+
+      - name: order_status
+        description: "Current status of the order."
+        tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: ['placed', 'shipped', 'delivered', 'cancelled']
+
+      - name: payment_method
+        description: "Payment method used for the order."
+
+      - name: source_file_name
+        description: "Name of the source file from which the record was loaded."
+        tests:
+          - not_null
+
+      - name: loaded_at
+        description: "Timestamp when the record was loaded into the staging table."
+        tests:
+          - not_null
