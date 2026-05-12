@@ -1,0 +1,10 @@
+version: 2
+
+sources:
+  - name: raw
+    database: ECOMMERCE_RAW
+    schema: LANDING
+    tables:
+      - name: orders_raw
+      - name: customers_raw
+      - name: inventory_raw

@@ -1,0 +1,42 @@
+version: 2
+
+models:
+  - name: stg_customers
+    description: "Parsed staging model for raw customer JSON data."
+    columns:
+      - name: hash_customer_id
+        description: "Hash-based surrogate key generated from customer_id."
+        tests:
+          - not_null
+          - unique
+
+      - name: customer_id
+        description: "Business customer identifier from raw JSON."
+        tests:
+          - not_null
+          - unique
+
+      - name: customer_name
+        description: "Customer name extracted from raw JSON."
+        tests:
+          - not_null
+
+      - name: email
+        description: "Customer email extracted from raw JSON."
+        tests:
+          - not_null
+
+      - name: customer_created_at
+        description: "Customer creation timestamp parsed from raw JSON."
+        tests:
+          - not_null
+
+      - name: source_file_name
+        description: "Name of the source file from which the record was loaded."
+        tests:
+          - not_null
+
+      - name: loaded_at
+        description: "Timestamp when the record was loaded into the staging table."
+        tests:
+          - not_null
