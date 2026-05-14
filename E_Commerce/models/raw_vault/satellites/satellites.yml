@@ -1,0 +1,37 @@
+version: 2
+
+models:
+  - name: sat_customer_details
+    description: "Satellite tracking historical changes to customer details."
+    columns:
+      - name: hash_customer_id
+        description: "Foreign key to the Customer Hub."
+        tests:
+          - not_null
+      - name: customer_hashdiff
+        description: "Hash of the descriptive columns to detect changes."
+        tests:
+          - not_null
+      - name: loaded_at
+        description: "When the record was loaded into the vault."
+        tests:
+          - not_null
+
+  - name: sat_order_details
+    description: "Satellite tracking historical changes to order details."
+    columns:
+      - name: hash_order_id
+        description: "Foreign key to the Order Hub."
+        tests:
+          - not_null
+      - name: order_hashdiff
+        description: "Hash of the descriptive columns."
+        tests:
+          - not_null
+      - name: loaded_at
+        tests:
+          - not_null
+      - name: order_amount
+        description: "The total amount of the order."
+        tests:
+          - not_null
