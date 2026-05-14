@@ -5,6 +5,12 @@
 name: 'E_Commerce'
 version: '1.0.0'
 
+
+vars:
+  automate_dv:
+    hash: 'MD5'
+
+
 # This setting configures which "profile" dbt uses for this project.
 profile: 'E_Commerce'
 
@@ -29,8 +35,21 @@ clean-targets:         # directories to be removed by `dbt clean`
 # In this example config, we tell dbt to build all models in the example/
 # directory as views. These settings can be overridden in the individual model
 # files using the `{{ config(...) }}` macro.
+      
 models:
-  E_Commerce:
-    # Config indicated by + and applies to all files under models/example/
-    example:
+  E_Commerce: 
+
+    staging:
+      +database: ECOMMERCE_VAULT
+      +schema: STAGING       
       +materialized: view
+
+    raw_vault:
+      +database: ECOMMERCE_VAULT
+      +schema: RAW_VAULT     
+      +materialized: table
+
+    business_vault:
+      +database: ECOMMERCE_MART
+      +schema: BUSINESS_VAULT
+      +materialized: table

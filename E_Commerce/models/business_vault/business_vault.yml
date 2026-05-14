@@ -1,0 +1,43 @@
+version: 2
+
+models:
+  - name: dim_customer
+    description: "Type 2 Slowly Changing Dimension for customers."
+    columns:
+      - name: customer_id
+        description: "The business key for the customer."
+        tests:
+          - not_null
+      - name: is_current
+        description: "Indicates if this is the active record."
+        tests:
+          - not_null
+          - accepted_values:
+              values: [true, false]
+
+  - name: mart_daily_revenue
+    description: "Daily aggregated revenue and order counts."
+    columns:
+      - name: report_date
+        description: "The date of the aggregations."
+        tests:
+          - unique
+          - not_null
+      - name: total_orders
+        tests:
+          - not_null
+      - name: daily_revenue
+        tests:
+          - not_null
+
+  - name: mart_inventory_turnover
+    description: "Daily snapshot of inventory values and product counts."
+    columns:
+      - name: report_date
+        description: "The date of the inventory snapshot."
+        tests:
+          - unique
+          - not_null
+      - name: total_items_in_stock
+        tests:
+          - not_null
