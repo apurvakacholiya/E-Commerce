@@ -5,17 +5,17 @@
     )
 }}
 
-WITH parsed_orders AS (
+WITH staged_orders AS (
     SELECT
-        RAW_DATA:order_id::string AS order_id,
-        TRY_CAST(RAW_DATA:amount::string AS number(10,2)) AS amount,
-        RAW_DATA:status::string AS status,
-        TRY_CAST(RAW_DATA:order_time::string AS timestamp_ntz) AS order_time
-    FROM {{ source('raw', 'orders_raw') }}
+        order_id,
+        amount,
+        status,
+        order_time
+    FROM {{ ref('stg_orders') }}
 ),
 
 filtered_orders AS (
-    SELECT * FROM parsed_orders
+    SELECT * FROM staged_orders
     
     --late-arriving logic with a 48-hour look-back window
     {% if is_incremental() %}
