@@ -17,9 +17,16 @@ with DAG(
     tags=["dbt", "snowflake", "inventory", "snapshot"],
 ) as dag:
 
-    # IMPORTANT: Ensure this path correctly maps to your dbt folder in your Airflow environment
+    run_staging = BashOperator(
+        task_id='run_stg_inventory',
+        bash_command='cd /opt/airflow/dbt_project && dbt run --select stg_inventory --profiles-dir .',
+    )
+
     run_inventory_snapshot = BashOperator(
         task_id="run_dbt_snapshot_inventory",
         # Added --profiles-dir . so dbt knows how to connect to Snowflake
         bash_command="cd /opt/airflow/dbt_project && dbt snapshot --select inventory_snapshot --profiles-dir .",
     )
+
+    # Define the new execution order
+    run_staging >> run_inventory_snapshot
