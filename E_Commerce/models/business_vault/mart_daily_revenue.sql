@@ -8,9 +8,9 @@
 WITH staged_orders AS (
     SELECT
         order_id,
-        amount,
-        status,
-        order_time
+        order_amount as amount,
+        order_status as status,
+        order_timestamp as order_time
     FROM {{ ref('stg_orders') }}
 ),
 

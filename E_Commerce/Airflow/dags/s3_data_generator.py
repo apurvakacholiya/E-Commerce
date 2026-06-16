@@ -26,7 +26,7 @@ def get_late_timestamp(base_date):
 @dag(
     dag_id="s3_daily_batch_generator",
     start_date=datetime(2026, 4, 15),
-    schedule="@daily",  # Changed to Daily
+    schedule=None,  # Changed to Daily
     catchup=False,
     default_args={
         "owner": "airflow",

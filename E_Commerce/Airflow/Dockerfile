@@ -1,0 +1,2 @@
+FROM rlohpuq-wx23048.registry.snowflakecomputing.com/ecommerce_orchestration/airflow/airflow_repo/airflow_image:latest
+RUN pip install faker
