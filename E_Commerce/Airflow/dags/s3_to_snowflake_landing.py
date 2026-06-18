@@ -65,7 +65,7 @@ default_args = {
 with DAG(
     dag_id="s3_to_snowflake_landing_hourly",
     start_date=datetime(2026, 5, 8),
-    schedule='@daily',
+    schedule=None,
     catchup=False,
     default_args=default_args,
     tags=["s3", "snowflake", "landing", "json"],
