@@ -1,23 +1,7 @@
-# spec:
-#   containers:
-#     - name: airflow-all-in-one
-#       image: rlohpuq-wx23048.registry.snowflakecomputing.com/ecommerce_orchestration/airflow/airflow_repo/airflow_image:latest
-#       env:
-#         AIRFLOW__CORE__EXECUTOR: LocalExecutor
-#         AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: sqlite:////opt/airflow/airflow.db
-#       command:
-#         - "airflow"
-#         - "standalone"
-#   endpoints:
-#     - name: airflow-ui
-#       port: 8080
-#       public: true
-
-
 spec:
   containers:
     - name: airflow-all-in-one
-      image: rlohpuq-wx23048.registry.snowflakecomputing.com/ecommerce_orchestration/airflow/airflow_repo/airflow_image:latest
+      image: xqsjchw-ipb11707.registry.snowflakecomputing.com/ecommerce_orchestration/airflow/airflow_repo/airflow_image:latest
       env:
         AIRFLOW__CORE__EXECUTOR: LocalExecutor
         AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: sqlite:////opt/airflow/airflow.db
@@ -35,6 +19,6 @@ spec:
     - name: dags-volume
       source: "@ECOMMERCE_ORCHESTRATION.AIRFLOW.AIRFLOW_DAGS_STAGE"
 
-  # # NEW: Give the container permission to use the internet rule
+  # Give the container permission to use the internet rule
   # networkPolicyConfig:
   #   allowInternetEgress: true
